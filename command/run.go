@@ -2,8 +2,10 @@ package command
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
+	"github.com/aquasecurity/table"
 	"github.com/hmerritt/autocost/ui"
 	"github.com/hmerritt/autocost/utils"
 )
@@ -49,11 +51,12 @@ func (c *RunCommand) Run(args []string) int {
 
 	// Calculate
 
-	ownershipCostPerYearFor10Years := make([]float64, 0, 10)
-	ownershipCostPerMonthFor10Years := make([]float64, 0, 10)
-	ownershipCostPerDayFor10Years := make([]float64, 0, 10)
+	yearsToCalculate := 10
+	ownershipCostPerYearForNYears := make([]float64, 0, yearsToCalculate)
+	ownershipCostPerMonthForNYears := make([]float64, 0, yearsToCalculate)
+	ownershipCostPerDayForNYears := make([]float64, 0, yearsToCalculate)
 
-	for i := range 10 {
+	for i := range yearsToCalculate {
 		ownershipLengthInYears := float64(i + 1)
 
 		ac := &AutoCost{
@@ -64,14 +67,30 @@ func (c *RunCommand) Run(args []string) int {
 		}
 
 		avgCostInYears := ac.Calc(ownershipLengthInYears)
-		ownershipCostPerYearFor10Years = append(ownershipCostPerYearFor10Years, avgCostInYears)
-		ownershipCostPerMonthFor10Years = append(ownershipCostPerMonthFor10Years, utils.FloatRound(avgCostInYears/12, 2))
-		ownershipCostPerDayFor10Years = append(ownershipCostPerDayFor10Years, utils.FloatRound(avgCostInYears/365, 2))
+		ownershipCostPerYearForNYears = append(ownershipCostPerYearForNYears, avgCostInYears)
+		ownershipCostPerMonthForNYears = append(ownershipCostPerMonthForNYears, utils.FloatRound(avgCostInYears/12, 2))
+		ownershipCostPerDayForNYears = append(ownershipCostPerDayForNYears, utils.FloatRound(avgCostInYears/365, 2))
 	}
 
-	fmt.Println("Cost per year for each year of ownership (1-10 years): ", ownershipCostPerYearFor10Years)
-	fmt.Println("Cost per month for each year of ownership (1-10 years): ", ownershipCostPerMonthFor10Years)
-	fmt.Println("Cost per day for each year of ownership (1-10 years): ", ownershipCostPerDayFor10Years)
+	// Print results
+
+	t := table.New(os.Stdout)
+	t.SetPadding(2)
+	t.SetDividers(table.UnicodeRoundedDividers)
+	// t.SetDividers(table.MarkdownDividers)
+	t.SetHeaders("YEAR", "£ / year", "£ / month", "£ / day")
+	t.SetAlignment(table.AlignLeft, table.AlignRight, table.AlignRight, table.AlignRight)
+
+	for y := range yearsToCalculate {
+		t.AddRow(
+			fmt.Sprint(y+1),
+			fmt.Sprint(ownershipCostPerYearForNYears[y]),
+			fmt.Sprint(ownershipCostPerMonthForNYears[y]),
+			fmt.Sprint(ownershipCostPerDayForNYears[y]),
+		)
+	}
+
+	t.Render()
 
 	return 0
 }
