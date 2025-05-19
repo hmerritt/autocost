@@ -1,0 +1,14 @@
+
+.yarn/
+.idea/
+.vagrant/
+bin/**/*
+target/
+node_modules/
+
+**/*.exe
+*.lnk
+*.log
+*.tar
+*.tar.gz
+win-terraform.hcl
