@@ -2,12 +2,15 @@ package command
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/aquasecurity/table"
 	"github.com/hmerritt/autocost/ui"
 	"github.com/hmerritt/autocost/utils"
+	"github.com/hmerritt/autocost/version"
 )
 
 type RunCommand struct {
@@ -38,8 +41,7 @@ func (c *RunCommand) Flags() *FlagMap {
 func (c *RunCommand) Run(args []string) int {
 	// Gather auto information from user
 
-	c.Log.Info("Information")
-	// name := ui.AskString("Name: ")
+	name := ui.AskString("Name")
 	price := ui.AskFloat("Price")
 	taxPerYear := ui.AskFloat("Tax per year")
 	insurancePerYear := ui.AskFloat("Insurance per year")
@@ -72,13 +74,32 @@ func (c *RunCommand) Run(args []string) int {
 		ownershipCostPerDayForNYears = append(ownershipCostPerDayForNYears, utils.FloatRound(avgCostInYears/365, 2))
 	}
 
+	// Log file
+
+	logFile, _ := os.OpenFile(fmt.Sprintf("%s.log", version.AppName), os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+	defer logFile.Close()
+	logFileStat, err := logFile.Stat()
+	if err == nil && logFileStat.Size() > 1 {
+		logFile.WriteString("\n---\n\n")
+	}
+	stdPlusLog := io.MultiWriter(os.Stdout, logFile)
+
 	// Print results
 
-	t := table.New(os.Stdout)
-	t.SetPadding(2)
+	logFile.WriteString(fmt.Sprintf(`Name: %s
+Price: £%.2f
+Tax per year: £%.2f
+Insurance per year: £%.2f
+(Estimated) Maintenance per year: £%.2f
+Date of calculation: %s
+
+`, name, price, taxPerYear, insurancePerYear, maintenancePerYear, time.Now().Format("Jan 2, 2006 at 3:04pm (MST)")))
+
+	t := table.New(stdPlusLog)
+	t.SetPadding(3)
 	t.SetDividers(table.UnicodeRoundedDividers)
 	// t.SetDividers(table.MarkdownDividers)
-	t.SetHeaders("YEAR", "£ / year", "£ / month", "£ / day")
+	t.SetHeaders("YEAR", "£/year", "£/month", "£/day")
 	t.SetAlignment(table.AlignLeft, table.AlignRight, table.AlignRight, table.AlignRight)
 
 	for y := range yearsToCalculate {

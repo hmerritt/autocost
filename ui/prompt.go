@@ -38,7 +38,7 @@ func AskConfirmation(prompt string, keepPromptingOnInvalidInput bool) bool {
 			return false
 		}
 
-		fmt.Printf("Invalid input '%s'. Please enter 'y'/'yes' or 'n'/'no'.\n", normalizedInput)
+		fmt.Printf("Invalid input. Please enter 'y'/'yes' or 'n'/'no'.\n", normalizedInput)
 	}
 }
 
@@ -63,7 +63,7 @@ func AskFloat(prompt string) float64 {
 		var value float64
 		n, err := fmt.Sscanf(normalizedInput, "%f", &value)
 		if n != 1 || err != nil {
-			fmt.Printf("Invalid input '%s'. Please enter a valid number.\n", normalizedInput)
+			fmt.Printf("Invalid input. Please enter a valid number.\n", normalizedInput)
 			continue
 		}
 
