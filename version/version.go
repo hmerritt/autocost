@@ -104,7 +104,6 @@ func PrintTitle() {
 
 	// Get full version string
 	versionString := versionStruct.FullVersionNumber(isDev)
-
 	fmt.Println(versionString)
 	fmt.Println("(c) MerrittCorp. All rights reserved.")
 	fmt.Println()

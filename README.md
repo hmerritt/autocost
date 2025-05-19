@@ -14,3 +14,5 @@ Takes into account:
 ```sh
 $ autocost run
 ```
+
+![](./autocost-screenshot.png)
