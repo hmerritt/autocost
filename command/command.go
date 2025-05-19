@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/hmerritt/go-car-monthly-cost-calculator/log"
-	"github.com/hmerritt/go-car-monthly-cost-calculator/version"
+	"github.com/hmerritt/autocost/log"
+	"github.com/hmerritt/autocost/version"
 
 	"github.com/mitchellh/cli"
 )

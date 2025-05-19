@@ -6,8 +6,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/hmerritt/go-car-monthly-cost-calculator/log"
-	"github.com/hmerritt/go-car-monthly-cost-calculator/ui"
+	"github.com/hmerritt/autocost/log"
+	"github.com/hmerritt/autocost/ui"
 
 	"github.com/jessevdk/go-flags"
 	"github.com/posener/complete"

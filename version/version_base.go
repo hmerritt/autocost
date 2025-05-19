@@ -1,6 +1,6 @@
 package version
 
-const AppName = "car-monthly-cost-calculator"
+const AppName = "autocost"
 
 var (
 	// The compilation date. This will be filled in by the compiler.
@@ -11,7 +11,7 @@ var (
 	GitBranch   string
 	GitDescribe string
 
-	Version           = "0.1.109"
+	Version           = "0.1.1"
 	VersionPrerelease = ""
 	VersionMetadata   = ""
 )

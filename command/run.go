@@ -15,12 +15,12 @@ func (c *RunCommand) Synopsis() string {
 
 func (c *RunCommand) Help() string {
 	helpText := fmt.Sprintf(`
-Usage: go-car-monthly-cost-calculator run [options] TASK
+Usage: autocost run [options] TASK
   
 Run calculation.
 
 Example:
-  $ go-car-monthly-cost-calculator run
+  $ autocost run
 `)
 
 	return strings.TrimSpace(helpText)

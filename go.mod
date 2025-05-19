@@ -1,4 +1,4 @@
-module github.com/hmerritt/go-car-monthly-cost-calculator
+module github.com/hmerritt/autocost
 
 go 1.24.3
 

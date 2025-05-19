@@ -24,8 +24,9 @@ import (
 )
 
 const (
-	MODULE_NAME = "hmerritt/go-car-monthly-cost-calculator" // go.mod module name
-	LOG_LEVEL   = 4                                         // 5 = debug, 4 = info, 3 = warn, 2 = error
+	APP_NAME    = "autocost"          // version/version_base.go version.AppName
+	MODULE_NAME = "hmerritt/autocost" // go.mod module name
+	LOG_LEVEL   = 4                   // 5 = debug, 4 = info, 3 = warn, 2 = error
 )
 
 // ----------------------------------------------------------------------------

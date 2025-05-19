@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"github.com/fatih/color"
-	"github.com/hmerritt/go-car-monthly-cost-calculator/utils"
-	"github.com/hmerritt/go-car-monthly-cost-calculator/version"
+	"github.com/hmerritt/autocost/utils"
+	"github.com/hmerritt/autocost/version"
 )
 
 const (

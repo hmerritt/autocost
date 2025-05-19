@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/hmerritt/go-car-monthly-cost-calculator/version"
+	"github.com/hmerritt/autocost/version"
 
 	"github.com/magefile/mage/mg"
 	"github.com/magefile/mage/sh"
@@ -72,9 +72,9 @@ func (Build) Release() error {
 			"-ldflags",
 			LdFlagString(),
 			"-tags",
-			"car-monthly-cost-calculator",
+			APP_NAME,
 			"-output",
-			"bin/car-monthly-cost-calculator",
+			fmt.Sprintf("bin/%s", APP_NAME),
 			"."},
 	})
 }
@@ -110,7 +110,7 @@ func Release() error {
 			if file.IsDir() {
 				continue
 			}
-			if strings.Contains(file.Name(), "car-monthly-cost-calculator") {
+			if strings.Contains(file.Name(), APP_NAME) {
 				fileInfo, err := file.Info()
 				if err != nil {
 					return log.Error(archLog, "error getting file info:", err)
@@ -127,7 +127,7 @@ func Release() error {
 		}
 
 		log.Debug(archLog, "zip for release")
-		zipFileName := fmt.Sprintf("go-car-monthly-cost-calculator_%s_%s.zip", releaseVersion, arch)
+		zipFileName := fmt.Sprintf("%s_%s_%s.zip", APP_NAME, releaseVersion, arch)
 		zipFilePath := fmt.Sprintf("bin/%s", zipFileName)
 
 		err = ZipFiles(zipFilePath, binFilePath)

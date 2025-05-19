@@ -1,6 +1,6 @@
-# Car Monthly Cost Calculator
+# `autocost`
 
-Calculate the average monthly cost of owning a car over a given period of time.
+Calculate the average monthly cost of owning an automobile over a given period of time.
 
 Takes into account:
 
@@ -10,3 +10,7 @@ Takes into account:
 -   Insurance (/year)
 -   Fuel cost (using MPG, Fuel cost (/litre), and distance driven (/year))
 -   How long you plan to keep the car (in years)
+
+```sh
+$ autocost run
+```

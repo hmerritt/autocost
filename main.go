@@ -3,8 +3,8 @@
 package main
 
 import (
-	"github.com/hmerritt/go-car-monthly-cost-calculator/command"
-	"github.com/hmerritt/go-car-monthly-cost-calculator/version"
+	"github.com/hmerritt/autocost/command"
+	"github.com/hmerritt/autocost/version"
 )
 
 func main() {
