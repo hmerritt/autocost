@@ -55,6 +55,7 @@ func AskFloat(prompt string) float64 {
 		}
 
 		normalizedInput := strings.TrimSpace(input)
+		normalizedInput = strings.ReplaceAll(normalizedInput, ",", "")
 
 		if normalizedInput == "" {
 			continue
