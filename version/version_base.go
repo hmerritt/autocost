@@ -11,7 +11,7 @@ var (
 	GitBranch   string
 	GitDescribe string
 
-	Version           = "0.1.6"
+	Version           = "0.1.9"
 	VersionPrerelease = ""
 	VersionMetadata   = ""
 )

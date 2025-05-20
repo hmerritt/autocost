@@ -1,5 +1,7 @@
 # `autocost`
 
+> Grab the latest binary from the releases page [here](https://github.com/hmerritt/autocost/releases/latest).
+
 Calculate the average monthly cost of owning an automobile over a given period of time.
 
 Takes into account:
