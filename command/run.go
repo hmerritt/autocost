@@ -46,9 +46,13 @@ func (c *RunCommand) Run(args []string) int {
 	taxPerYear := ui.AskFloat("Tax per year")
 	insurancePerYear := ui.AskFloat("Insurance per year")
 	maintenancePerYear := ui.AskFloat("(Estimated) Maintenance per year")
-	// milesDrivenPerYear := ui.AskFloat("Miles driven per year")
-	// mpgAvg := ui.AskFloat("Average MPG")
-	// fuelPricePerLiter := ui.AskFloat("Fuel price per liter")
+	milesDrivenPerYear := ui.AskFloat("(Estimated) Miles driven per year")
+	mpgAvg := 0.0
+	fuelPricePerLiter := 0.0
+	if milesDrivenPerYear > 0 {
+		mpgAvg = ui.AskFloat("Average MPG")
+		fuelPricePerLiter = ui.AskFloat("Fuel price per liter")
+	}
 	c.Log.Info("")
 
 	// Calculate
@@ -66,6 +70,9 @@ func (c *RunCommand) Run(args []string) int {
 			taxPerYear:         taxPerYear,
 			insurancePerYear:   insurancePerYear,
 			maintenancePerYear: maintenancePerYear,
+			milesDrivenPerYear: milesDrivenPerYear,
+			mpgAvg:             mpgAvg,
+			fuelPricePerLiter:  fuelPricePerLiter,
 		}
 
 		avgCostInYears := ac.Calc(ownershipLengthInYears)
@@ -133,8 +140,10 @@ func (a *AutoCost) Calc(ownershipLengthInYears float64) float64 {
 	totalCost += a.insurancePerYear * ownershipLengthInYears
 	totalCost += a.maintenancePerYear * ownershipLengthInYears
 
-	// @TODO: Calculate fuel cost
-	// fuelPricePerGallon := a.fuelPricePerLiter * 4.54609
+	// Calculate fuel cost
+	fuelPricePerGallon := a.fuelPricePerLiter * 4.54609
+	fuelCost := (a.milesDrivenPerYear / a.mpgAvg) * fuelPricePerGallon * ownershipLengthInYears
+	totalCost += fuelCost
 
 	finalCostPerYear := totalCost / ownershipLengthInYears
 	finalCostPerYear = utils.FloatRound(finalCostPerYear, 2)
