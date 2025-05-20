@@ -66,7 +66,7 @@ func (Build) Release() error {
 	return RunSync([][]string{
 		{"gox",
 			"-osarch",
-			"windows/amd64",
+			"darwin/amd64 darwin/arm64 linux/amd64 linux/arm64 windows/amd64",
 			"-gocmd",
 			"go",
 			"-ldflags",
@@ -74,7 +74,7 @@ func (Build) Release() error {
 			"-tags",
 			APP_NAME,
 			"-output",
-			fmt.Sprintf("bin/%s", APP_NAME),
+			fmt.Sprintf("bin/{{.OS}}_{{.Arch}}/%s", APP_NAME),
 			"."},
 	})
 }
@@ -90,7 +90,12 @@ func Release() error {
 	releaseVersion := GetEnv("RELEASE_VERSION", version.Version)
 	log.Info("release version: ", releaseVersion)
 
-	releaseArchs := []string{"windows_amd64"}
+	releaseArchs := []string{
+		"darwin_amd64",
+		"darwin_arm64",
+		"linux_amd64",
+		"linux_arm64",
+		"windows_amd64"}
 
 	// Zip
 	for _, arch := range releaseArchs {
